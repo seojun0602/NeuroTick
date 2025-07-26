@@ -1,5 +1,5 @@
 /**
-  * Author: seojun0002
+  * Author: seojun0602
   * NeuroTick. 2025. 07. 26.
 */
 
