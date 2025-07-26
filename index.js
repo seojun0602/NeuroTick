@@ -19,8 +19,8 @@ function Node(name){
   this.Na_open = false; // 나트륨 채널
   
   this.next = null;
-  this.distance = 1;
-  this.velocity = 0.5;
+  this.distance = 1; // 거리(mm)
+  this.velocity = 0.5; // 속도(mm/ms)
   
   this._queue = [];
 }
