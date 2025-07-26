@@ -18,6 +18,7 @@ function Node(name){
   this.K_open = false; // 칼륨 채널
   this.Na_open = false; // 나트륨 채널
   
+  // 연결된 node에 관해..
   this.next = null;
   this.distance = 1; // 거리(mm)
   this.velocity = 0.5; // 속도(mm/ms)
