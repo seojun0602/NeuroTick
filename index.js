@@ -156,7 +156,7 @@ a.distance = 4; // a와 다음 노드 사이의 거리
 a.next = b; // a 다음 b..
 b.next = c; // b 다음 c..
 
-a.stimulate(); // b 에 자극을..
+a.stimulate(); // a 에 자극을..
 
 // 30 틱 실행. (0~19) 30ms
 for (let t = 0; t < 30; t++) {
