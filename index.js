@@ -1,6 +1,7 @@
 /**
   * Author: seojun0602
   * NeuroTick. 2025. 07. 26.
+  * https://github.com/seojun0602/NeuroTick
 */
 
 function Node(name){
