@@ -44,24 +44,40 @@ Node.prototype.calc = function() {
 }
 
 /* tick. 1ms마다 실행되는 동작으로 보면 됨. */
-Node.prototype.tick = function() {
-  // Na/K 펌프
+Node.prototype.tick = function() {  
+  // 전달 처리 (지연된 전달)
+  this.handle();
+  
+  // Na/K 펌프 (항상 작동.. & ATP 소모)
   this.Na_in -= 3;
   this.Na_out += 3;
   this.K_in += 2;
   this.K_out -= 2;
   
+  // 휴지기에 펌프 상쇄 (농도 기울기에 따른 평형을 구현하기 힘들어서..)
+  if (this.state == 0) {
+    this.Na_in += 3;
+    this.Na_out -= 3;
+    this.K_in -= 2;
+    this.K_out += 2;
+    
+   /* 실제로는 분극 상태에서 일부 K+ 가 K+ 채널을 통해 유출된다.
+    * 농도 기울기에 따른 이동과 일부 열린 K+ 채널을 통한 유출을 통합해서 처리하는 로직이라고 생각하자.
+    */
+  }
+  
+  // 자극이 오면 -> 나트륨 채널 열림
   if (this.state == 1) {
     this.Na_open = true;
   }
 
-  // 나트륨 채널
+  // 나트륨 채널이 열렸을 때
   if (this.Na_open) {
     this.Na_in += 10;
     this.Na_out -= 10;
   }
 
-  // 칼륨 채널
+  // 칼륨 채널이 열렸을 때
   if (this.K_open) {
     this.K_in -= 7;
     this.K_out += 7;
@@ -98,7 +114,6 @@ Node.prototype.tick = function() {
     this.state = 0; // 휴지(분극)
   }
   
- this.handle();
 };
 
 // 자극
@@ -114,6 +129,7 @@ Node.prototype.propagate = function() {
   }
 };
 
+// 전달 지연
 Node.prototype.handle = function() {
   this._queue = this._queue.filter(stim => {
     stim.delay--;
@@ -135,12 +151,13 @@ let a = new Node("A"); // A라는 이름의 node
 let b = new Node("B"); // B...
 let c = new Node("C"); // C...
 
+a.distance = 4; // a와 다음 노드 사이의 거리
 a.next = b; // a 다음 b..
 b.next = c; // b 다음 c..
 
-b.stimulate(); // b 에 자극을..
+a.stimulate(); // b 에 자극을..
 
-// 20 틱 실행. (0~19)
+// 20 틱 실행. (0~19) 20ms
 for (let t = 0; t < 20; t++) {
   console.log(`\nTick ${t}`);
   a.tick(); b.tick(); c.tick();
