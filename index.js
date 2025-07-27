@@ -157,8 +157,8 @@ b.next = c; // b 다음 c..
 
 a.stimulate(); // b 에 자극을..
 
-// 20 틱 실행. (0~19) 20ms
-for (let t = 0; t < 20; t++) {
+// 30 틱 실행. (0~19) 30ms
+for (let t = 0; t < 30; t++) {
   console.log(`\nTick ${t}`);
   a.tick(); b.tick(); c.tick();
   a.log(); b.log(); c.log();
